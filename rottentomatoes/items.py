@@ -6,7 +6,7 @@
 import scrapy
 
 
-class RottentomatoesItem(scrapy.Item):
+class MovieItem(scrapy.Item):
     name = scrapy.Field()
     rating = scrapy.Field() #rating on website should be named flag
     genre = scrapy.Field()
