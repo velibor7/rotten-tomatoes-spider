@@ -27,6 +27,19 @@ class MovieSpider(scrapy.Spider):
         item['tomatometer'] = response.css('#tomato_meter_link .mop-ratings-wrap__percentage::text').get()
         yield item
 
+    # shouldnt use this for every string
+    def clear_string(self, string) -> str:
+        # za obican string
+        string = string.replace('\n', '')
+        string = string.replace(' ', '')
+
+        return string
+
+    def clear_list(self, string, delimeter: str) -> list:
+        string = self.clear_string(string)
+        return string.split(delimeter)
+
+
 
 
 
