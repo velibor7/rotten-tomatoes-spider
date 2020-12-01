@@ -24,10 +24,16 @@ class MovieSpider(scrapy.Spider):
     def parse_individual_movie(self, response):
         item = MovieItem()
         item['name'] = response.css('.mop-ratings-wrap__title--top::text').get()
-        item['tomatometer'] = response.css('#tomato_meter_link .mop-ratings-wrap__percentage::text').get()
+        item['flag'] = response.css('.clearfix:nth-child(1) .meta-value::text').get().replace('\n', '').strip()
+        item['genre'] = response.css('.genre::text').get().replace(' ', '').replace('\n', '').replace('and', ',').split(',')
+        item['original_language'] = response.css('.clearfix:nth-child(3) .meta-value::text').get().replace('\n', '').strip()
+        item['release_date'] = response.css('.clearfix:nth-child(7) time::text').get()
+        item['runtime'] = response.css('.clearfix:nth-child(10) time::text').get().replace('\n', '').strip()
+        item['tomatometer'] = response.css('#tomato_meter_link .mop-ratings-wrap__percentage::text').get().replace('\n', '').strip()
+
         yield item
 
-    # shouldnt use this for every string
+    # shouldnt use this for every string    
     def clear_string(self, string) -> str:
         # za obican string
         string = string.replace('\n', '')
