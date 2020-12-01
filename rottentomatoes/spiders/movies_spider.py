@@ -13,13 +13,25 @@ class MovieSpider(scrapy.Spider):
     # for loop za sve ce da ide od ~1960 do 2020 i tako cemo kroz sve da prodjemo
 
     def parse(self, response):
-        items = MovieItem()
 
-        raw = response.css('#top_movies_main .articleLink::text').extract()
-        movie_names = []
+        # movie_links = response.css('#top_movies_main .articleLink::attr(href)').extract()
 
-        for movie in movies:
-            movie_names.append(movie.strip())
+        for href in response.css('#top_movies_main .articleLink::attr(href)'):
+            url = response.urljoin(href.extract())
+            # pogadjamo dobar url
+            yield scrapy.Request(url, callback = self.parse_individual_movie)
+
+    def parse_individual_movie(self, response):
+        item = MovieItem()
+        item['name'] = response.css('.mop-ratings-wrap__title--top::text').get()
+        item['tomatometer'] = response.css('#tomato_meter_link .mop-ratings-wrap__percentage::text').get()
+        yield item
+
+
+
+
+
+
             
 
 
