@@ -25,7 +25,7 @@ class MovieSpider(scrapy.Spider):
         item = MovieItem()
         item['name'] = response.css('.mop-ratings-wrap__title--top::text').get()
         item['genre'] = response.css('.genre::text').get().replace(' ', '').replace('\n', '').replace('and', ',').split(',')
-        item['consensus'] = None # response.css('.genre::text').get().replace(' ', '').replace('\n', '').replace('and', ',').split(',')
         item['tomatometer'] = response.css('#tomato_meter_link .mop-ratings-wrap__percentage::text').get().strip()
+        item['audience_score'] = response.css('.audience-score .mop-ratings-wrap__percentage::text').get().strip()
 
         yield item
