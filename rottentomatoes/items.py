@@ -9,5 +9,6 @@ import scrapy
 class MovieItem(scrapy.Item):
     name = scrapy.Field()
     genre = scrapy.Field()
-    tomatometer = scrapy.Field() # percent and total count
+    year = scrapy.Field()
+    tomatometer = scrapy.Field()
     audience_score = scrapy.Field() 
